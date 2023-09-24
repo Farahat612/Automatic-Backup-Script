@@ -49,82 +49,82 @@ The script ensures that recent updates to sensitive files are regularly backed u
 ## Tasks
 
 ### Task 1: Set Target and Destination Directories
-```
+```shell
 targetDirectory=$1
 destinationDirectory=$2
 ```
 
 ### Task 2: Display Command Line Arguments
-```
+```shell
 echo "Target Directory: $targetDirectory"
 echo "Destination Directory: $destinationDirectory"
 ```
 
 ### Task 3: Define Current Timestamp
-```
+```shell
 currentTS=$(date +%s)
 ```
 
 ### Task 4: Define Backup File Name
-```
+```shell
 backupFileName="backup-$currentTS.tar.gz"
 ```
 
 ### Task 5: Define Original Absolute Path
-```
+```shell
 origAbsPath=$(pwd)
 ```
 
 ### Task 6: Define Destination Absolute Path
-```
+```shell
 cd $destinationDirectory
 destAbsPath=$(pwd)
 ```
 
 ### Task 7: Change to Target Directory
-```
+```shell
 cd $origAbsPath
 cd $targetDirectory
 ```
 
 ### Task 8: Define Yesterday Timestamp
-```
+```shell
 yesterdayTS=$((currentTS - 24 * 60 * 60))
 ```
 
 ### Task 9: Get Files In Current Directory
-```
+```shell
 for file in $(ls)
 ```
 
 ### Task 10: Check File Modification Date
-```
+```shell
 file_last_modified_date=$(date -r "$file" +%s)
 if ((file_last_modified_date > yesterdayTS)); then
 ```
 
 ### Task 11: Add File to Backup List
-```
+```shell
 toBackup+=("$file")
 ```
 
 ### Task 12: Archive Files
-```
+```shell
 tar -czvf "$backupFileName" "${toBackup[@]}"
 ```
 
 ### Task 13: Move Backup File
-```
+```shell
 mv "$backupFileName" "$destAbsPath"
 ```
 
 ### Task 14: Make Script Executable
-```
+```shell
 chmod +x backup.sh
 ```
 
 ### Task 15: Schedule Backup Using Cron
-```
+```shell
 sudo cp /path/to/backup.sh /usr/local/bin/
 crontab -e
 */1 * * * * /usr/local/bin/backup.sh /home/project/important-documents /home/project
