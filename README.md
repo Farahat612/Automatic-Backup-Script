@@ -82,49 +82,49 @@ destAbsPath=$(pwd)
 ```
 
 ### Task 7: Change to Target Directory
-```shell
+``` bash
 cd $origAbsPath
 cd $targetDirectory
 ```
 
 ### Task 8: Define Yesterday Timestamp
-```shell
+``` bash
 yesterdayTS=$((currentTS - 24 * 60 * 60))
 ```
 
 ### Task 9: Get Files In Current Directory
-```shell
+``` bash
 for file in $(ls)
 ```
 
 ### Task 10: Check File Modification Date
-```shell
+``` bash
 file_last_modified_date=$(date -r "$file" +%s)
 if ((file_last_modified_date > yesterdayTS)); then
 ```
 
 ### Task 11: Add File to Backup List
-```shell
+``` bash
 toBackup+=("$file")
 ```
 
 ### Task 12: Archive Files
-```shell
+``` bash
 tar -czvf "$backupFileName" "${toBackup[@]}"
 ```
 
 ### Task 13: Move Backup File
-```shell
+``` bash
 mv "$backupFileName" "$destAbsPath"
 ```
 
 ### Task 14: Make Script Executable
-```shell
+``` bash
 chmod +x backup.sh
 ```
 
 ### Task 15: Schedule Backup Using Cron
-```shell
+``` bash
 sudo cp /path/to/backup.sh /usr/local/bin/
 crontab -e
 */1 * * * * /usr/local/bin/backup.sh /home/project/important-documents /home/project
