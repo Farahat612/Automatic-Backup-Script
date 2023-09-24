@@ -12,14 +12,14 @@
   - [Task 5: Define Original Absolute Path](#task-5-define-original-absolute-path)
   - [Task 6: Define Destination Absolute Path](#task-6-define-destination-absolute-path)
   - [Task 7: Change to Target Directory](#task-7-change-to-target-directory)
-  - [Task 8: Calculate Yesterday's Timestamp](#task-8-calculate-yesterdays-timestamp)
+  - [Task 8: Calculate Yesterday's Timestamp](#task-8-define-yesterdays-timestamp)
   - [Task 9: Get Files in Current Directory](#task-9-get-files-in-current-directory)
   - [Task 10: Check File Modification Date](#task-10-check-file-modification-date)
-  - [Task 11: Add Files to Backup List](#task-11-add-files-to-backup-list)
+  - [Task 11: Add Files to Backup List](#task-11-add-file-to-backup-list)
   - [Task 12: Archive Files](#task-12-archive-files)
   - [Task 13: Move Backup File](#task-13-move-backup-file)
-  - [Task 15: Make Script Executable](#task-15-make-script-executable)
-  - [Task 17: Schedule Backup Using Cron](#task-17-schedule-backup-using-cron)
+  - [Task 14: Make Script Executable](#task-15-make-script-executable)
+  - [Task 15: Schedule Backup Using Cron](#task-17-schedule-backup-using-cron)
 - [Usage](#usage)
 - [Technologies](#technologies)
 - [Contributing](#contributing)
@@ -48,7 +48,93 @@ The script ensures that recent updates to sensitive files are regularly backed u
 
 ## Tasks
 
-( ... Task details as previously mentioned ... )
+### Task 1: Set Target and Destination Directories
+```
+targetDirectory=$1
+destinationDirectory=$2
+```
+
+### Task 2: Display Command Line Arguments
+```
+echo "Target Directory: $targetDirectory"
+echo "Destination Directory: $destinationDirectory"
+```
+
+### Task 3: Define Current Timestamp
+```
+currentTS=$(date +%s)
+```
+
+### Task 4: Define Backup File Name
+```
+backupFileName="backup-$currentTS.tar.gz"
+```
+
+### Task 5: Define Original Absolute Path
+```
+origAbsPath=$(pwd)
+```
+
+### Task 6: Define Destination Absolute Path
+```
+cd $destinationDirectory
+destAbsPath=$(pwd)
+```
+
+### Task 7: Change to Target Directory
+```
+cd $origAbsPath
+cd $targetDirectory
+```
+
+### Task 8: Define Yesterday Timestamp
+```
+yesterdayTS=$((currentTS - 24 * 60 * 60))
+```
+
+### Task 9: Get Files In Current Directory
+```
+for file in $(ls)
+```
+
+### Task 10: Check File Modification Date
+```
+file_last_modified_date=$(date -r "$file" +%s)
+if ((file_last_modified_date > yesterdayTS)); then
+```
+
+### Task 11: Add File to Backup List
+```
+toBackup+=("$file")
+```
+
+### Task 12: Archive Files
+```
+tar -czvf "$backupFileName" "${toBackup[@]}"
+```
+
+### Task 13: Move Backup File
+```
+mv "$backupFileName" "$destAbsPath"
+```
+
+### Task 14: Make Script Executable
+```
+chmod +x backup.sh
+```
+
+### Task 15: Schedule Backup Using Cron
+```
+sudo cp /path/to/backup.sh /usr/local/bin/
+crontab -e
+*/1 * * * * /usr/local/bin/backup.sh /home/project/important-documents /home/project
+sudo service cron start
+sudo service cron stop
+crontab -e
+0 0 * * * /usr/local/bin/backup.sh /home/project/important-documents /home/project
+
+```
+
 
 ## Usage
 
