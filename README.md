@@ -49,29 +49,29 @@ The script ensures that recent updates to sensitive files are regularly backed u
 ## Tasks
 
 ### Task 1: Set Target and Destination Directories
-```bash
+``` bash
 targetDirectory=$1
 destinationDirectory=$2
 ```
 
 ### Task 2: Display Command Line Arguments
-```bash
+``` bash
 echo "Target Directory: $targetDirectory"
 echo "Destination Directory: $destinationDirectory"
 ```
 
 ### Task 3: Define Current Timestamp
-```bash
+``` bash
 currentTS=$(date +%s)
 ```
 
 ### Task 4: Define Backup File Name
-```shell
+``` bash
 backupFileName="backup-$currentTS.tar.gz"
 ```
 
 ### Task 5: Define Original Absolute Path
-```shell
+``` bash
 origAbsPath=$(pwd)
 ```
 
