@@ -49,19 +49,19 @@ The script ensures that recent updates to sensitive files are regularly backed u
 ## Tasks
 
 ### Task 1: Set Target and Destination Directories
-```shell
+```bash
 targetDirectory=$1
 destinationDirectory=$2
 ```
 
 ### Task 2: Display Command Line Arguments
-```shell
+```bash
 echo "Target Directory: $targetDirectory"
 echo "Destination Directory: $destinationDirectory"
 ```
 
 ### Task 3: Define Current Timestamp
-```shell
+```bash
 currentTS=$(date +%s)
 ```
 
